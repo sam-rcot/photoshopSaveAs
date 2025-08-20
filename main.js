@@ -25,14 +25,31 @@ entrypoints.setup({
           imageFormat.addEventListener("change", () => {
             const selectedOption = imageFormat.value;
             optionText.innerText = selectedOption;
+
+            // Update slider min/max based on format
+            if (qualitySlider) {
+              if (selectedOption === "jpg") {
+                qualitySlider.min = 0;
+                qualitySlider.max = 12;
+              } else if (selectedOption === "png") {
+                qualitySlider.min = 0;
+                qualitySlider.max = 9;
+              }
+
+              // Optional: reset slider value to min to avoid out-of-range
+              qualitySlider.value = qualitySlider.min;
+              qualityValue.innerText = qualitySlider.value;
+            }
+
             alert(selectedOption);
           });
         }
+
+        // Update slider value in real-time as user drags
         if (qualitySlider) {
           qualitySlider.addEventListener("input", () => {
-            const sliderValue = qualitySlider.value;
-            qualityValue.innerText = sliderValue
-          })
+            qualityValue.innerText = qualitySlider.value;
+          });
         }
       }
     }
