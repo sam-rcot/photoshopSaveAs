@@ -7,7 +7,7 @@
 </head>
 
 <body>
-  <div>
+  <div id="imageFormatOptions">
     <label for="imageFormat">Select an Option:</label>
     <select id="imageFormat">
       <option value="">-- Choose an option --</option>
@@ -17,8 +17,20 @@
     
     <div><p>Image format: </p><span id="option"></span></div>
   </div>
+  <div id="qualityContainer">
+    <input
+    type="range"
+    id="qualitySlider"
+    name="qualitySlider"
+    min="0"
+    max="12"
+    step="1" />
+  <label for="qualitySlider">Quality</label>
+  <p>Quality value</p>
+  <span id="qualityValue"></span>
+  </div>
   <footer>
-    <sp-button id="btnImageFormat">Show Option</sp-button>
+
   </footer>
 </body>
 
