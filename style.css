@@ -12,3 +12,15 @@ body {
     border-radius: 4px;
     padding: 16px;
   }
+
+#imageFormatOptions {
+  display: flex;
+  flex-direction: column;
+}
+
+#sliderContainer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+}

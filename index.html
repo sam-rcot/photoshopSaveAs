@@ -10,24 +10,27 @@
   <div id="imageFormatOptions">
     <label for="imageFormat">Select an Option:</label>
     <select id="imageFormat">
-      <option value="">-- Choose an option --</option>
-      <option value="jpg">JPG</option>
+      <option value="jpg" selected>JPG</option>
       <option value="png">PNG</option>
     </select>
-    
-    <div><p>Image format: </p><span id="option"></span></div>
+
+    <div>
+      <p>Image format: </p><span id="option"></span>
+    </div>
   </div>
   <div id="qualityContainer">
-    <input
-    type="range"
-    id="qualitySlider"
-    name="qualitySlider"
-    min="0"
-    max="12"
-    step="1" />
-  <label for="qualitySlider">Quality</label>
-  <p>Quality value</p>
-  <span id="qualityValue"></span>
+
+    <div id="sliderContainer">
+      <span id="min"></span>
+      <input type="range" id="qualitySlider" name="qualitySlider" step="1" />
+      <span id="max"></span>
+    </div>
+    
+
+
+    <label for="qualitySlider">Quality</label>
+    <p>Quality value</p>
+    <span id="qualityValue"></span>
   </div>
   <footer>
 
