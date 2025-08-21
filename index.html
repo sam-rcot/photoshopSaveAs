@@ -7,29 +7,15 @@
 </head>
 
 <body>
-  <div id="imageFormatOptions">
-    <label for="imageFormat">Select an Option:</label>
-    <select id="imageFormat">
-      <option value="jpg" selected>JPG</option>
-      <option value="png">PNG</option>
-    </select>
-    <div id="qualityContainer">
-      <label for="qualitySlider"><span id="qualityLabel">Quality</span></label>
-      <div id="sliderContainer">
-        <span id="min"></span>
-        <input type="range" id="qualitySlider" name="qualitySlider" step="1" />
-        <span id="max"></span>
-      </div>
-      <p>Quality value</p>
-      <span id="qualityValue"></span>
-    </div>
+<sp-heading size="L">Save image</sp-heading>
+
     <sp-picker id="formatSelector" placeholder="Make a selection..." style="width: 320px">
       <sp-menu slot="options">
         <sp-menu-item> JPG </sp-menu-item>
         <sp-menu-item> PNG </sp-menu-item>
       </sp-menu>
     </sp-picker>
-    <sp-body id="spBody">Hello</sp-body>
+
     <sp-slider id="spSlider" min="0" max="12" value="12">
       <sp-label id="spSliderLabel" slot="label">JPG quality</sp-label>
     </sp-slider>
