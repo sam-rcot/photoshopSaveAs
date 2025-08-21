@@ -19,16 +19,22 @@ entrypoints.setup({
         const minSpan = document.getElementById("min");
         const maxSpan = document.getElementById("max");
         const qualityLabel = document.getElementById("qualityLabel");
+        
         const spFormat = document.getElementById("formatSelector")
         const spBody = document.getElementById("spBody")
+        const spSliderLabel = document.getElementById("spSliderLabel")
+        const spSlider = document.getElementById("spSlider")
 
-        spBody.innerText = "Goodbye"
-        
+
+
+
+
         // console.log(spFormat)
         minSpan.innerText = 0;
 
         function updateFormat() {
           const selectedOption = imageFormat.value;
+
 
           if (qualitySlider) {
             if (selectedOption === "jpg") {
@@ -46,10 +52,24 @@ entrypoints.setup({
             qualitySlider.value = qualitySlider.min;
             qualityValue.innerText = qualitySlider.value;
           }
+
         }
         if (spFormat) {
           spFormat.addEventListener("change", evt => {
-            console.log(`Selected item: ${evt.target.selectedIndex}`);
+            const selection = evt.target.selectedIndex
+            if (selection == 0) {
+              spBody.innerText = "JPG"
+              spSlider.min = 0
+              spSlider.max = 12
+
+            } else if (selection == 1) {
+              spBody.innerText = "PNG"
+              spSliderLabel.innerText = "PNG compression"
+              spSlider.min = 0
+              spSlider.max = 9
+              spSlider.value = 1
+
+            }
           })
 
         }
