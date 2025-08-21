@@ -1,24 +1,21 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <script src="main.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<sp-heading size="L">Save image</sp-heading>
+  <sp-heading size="L">Export Image Settings</sp-heading>
 
-    <sp-picker id="formatSelector" placeholder="Make a selection..." style="width: 320px">
-      <sp-menu slot="options">
-        <sp-menu-item> JPG </sp-menu-item>
-        <sp-menu-item> PNG </sp-menu-item>
-      </sp-menu>
-    </sp-picker>
+  <sp-picker id="imageFormatSelector" placeholder="Select image format..." style="width: 320px">
+    <sp-menu slot="options">
+      <sp-menu-item>JPG</sp-menu-item>
+      <sp-menu-item>PNG</sp-menu-item>
+    </sp-menu>
+  </sp-picker>
 
-    <sp-slider id="spSlider" min="0" max="12" value="12">
-      <sp-label id="spSliderLabel" slot="label">JPG quality</sp-label>
-    </sp-slider>
+  <sp-slider id="qualitySlider" min="0" max="12" value="12">
+    <sp-label id="qualitySliderLabel" slot="label">JPG quality</sp-label>
+  </sp-slider>
 </body>
-
 </html>

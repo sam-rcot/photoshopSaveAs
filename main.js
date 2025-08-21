@@ -2,6 +2,22 @@ const { entrypoints } = require("uxp");
 const photoshop = require("photoshop").app;
 const { core } = require("photoshop");
 
+// Configuration for different image formats
+const FORMAT_CONFIG = {
+  jpg: {
+    minValue: 0,
+    maxValue: 12,
+    defaultValue: 12,
+    sliderLabel: "JPG quality"
+  },
+  png: {
+    minValue: 0,
+    maxValue: 9,
+    defaultValue: 1,
+    sliderLabel: "PNG compression"
+  }
+};
+
 entrypoints.setup({
   commands: {
     showAlert: (message) => {
@@ -11,52 +27,61 @@ entrypoints.setup({
   panels: {
     vanilla: {
       show(node) {
-        // SWC elements
-        const spFormat = document.getElementById("formatSelector");
+        // Get UI elements
+        const imageFormatSelector = document.getElementById("imageFormatSelector");
+        const qualitySlider = document.getElementById("qualitySlider");
+        const qualitySliderLabel = document.getElementById("qualitySliderLabel");
 
-        const spSlider = document.getElementById("spSlider");
-        const spSliderLabel = document.getElementById("spSliderLabel");
-
-        function updateFormat(format, spElements) {
-          let min = 0;
-          let max = 12;
-          let value = 12;
-          let sliderLabel = "JPG quality";
-
-          if (format === "png") {
-            max = 9;
-            value = 1;
-            sliderLabel = "PNG compression";
+        /**
+         * Updates slider configuration based on selected image format
+         * @param {string} selectedFormat - The selected format ('jpg' or 'png')
+         * @param {Object} uiElements - Object containing slider and label elements
+         */
+        function updateSliderForFormat(selectedFormat, uiElements) {
+          const config = FORMAT_CONFIG[selectedFormat];
+          
+          if (!config) {
+            console.warn(`Unknown format: ${selectedFormat}`);
+            return;
           }
 
-          if (spElements) {
-            const { spSlider, spSliderLabel } = spElements;
-            spSlider.min = min;
-            spSlider.max = max;
-            spSlider.value = value;
-            spSliderLabel.innerText = sliderLabel;
-
+          if (uiElements && uiElements.qualitySlider && uiElements.qualitySliderLabel) {
+            const { qualitySlider, qualitySliderLabel } = uiElements;
+            
+            qualitySlider.min = config.minValue;
+            qualitySlider.max = config.maxValue;
+            qualitySlider.value = config.defaultValue;
+            qualitySliderLabel.innerText = config.sliderLabel;
           }
         }
 
-        // Event listener for the SWC picker
-        if (spFormat) {
-          spFormat.addEventListener("change", (evt) => {
-            const selectedIndex = evt.target.selectedIndex;
-            const format = selectedIndex === 0 ? "jpg" : "png";
-            updateFormat(format, { spSlider, spSliderLabel });
+        /**
+         * Gets the currently selected format from the format selector
+         * @returns {string} The selected format ('jpg' or 'png')
+         */
+        function getCurrentFormat() {
+          return imageFormatSelector.selectedIndex === 0 ? "jpg" : "png";
+        }
+
+        // Initialize format selector event listener
+        if (imageFormatSelector) {
+          imageFormatSelector.addEventListener("change", (event) => {
+            const selectedFormat = getCurrentFormat();
+            updateSliderForFormat(selectedFormat, { qualitySlider, qualitySliderLabel });
           });
 
-          // Initialize the picker and slider
-          const initialFormat = spFormat.selectedIndex === 0 ? "jpg" : "png";
-          updateFormat(initialFormat, { spSlider, spSliderLabel });
+          // Initialize the slider with the default format
+          const initialFormat = getCurrentFormat();
+          updateSliderForFormat(initialFormat, { qualitySlider, qualitySliderLabel });
         }
 
-        if (spSlider) {
-          spSlider.addEventListener("input", evt => {
-            console.log(`New value: ${evt.target.value}`);
-          })
-
+        // Initialize quality slider event listener
+        if (qualitySlider) {
+          qualitySlider.addEventListener("input", (event) => {
+            const currentValue = event.target.value;
+            const currentFormat = getCurrentFormat();
+            console.log(`${FORMAT_CONFIG[currentFormat].sliderLabel}: ${currentValue}`);
+          });
         }
       }
     }
