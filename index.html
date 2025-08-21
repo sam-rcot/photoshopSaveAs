@@ -13,28 +13,26 @@
       <option value="jpg" selected>JPG</option>
       <option value="png">PNG</option>
     </select>
+    <sp-picker id="formatSelector" placeholder="Make a selection..." style="width: 320px">
+      <sp-menu  slot="options">
+        <sp-menu-item> JPG </sp-menu-item>
+        <sp-menu-item> PNG </sp-menu-item>
+      </sp-menu>
+    </sp-picker>
+    <sp-body id="spBody">Hello</sp-body>
 
-    <div>
-      <p>Image format: </p><span id="option"></span>
+    <div id="qualityContainer">
+      <label for="qualitySlider"><span id="qualityLabel">Quality</span></label>
+      <div id="sliderContainer">
+        <span id="min"></span>
+        <input type="range" id="qualitySlider" name="qualitySlider" step="1" />
+        <span id="max"></span>
+      </div>
+
+      <p>Quality value</p>
+      <span id="qualityValue"></span>
     </div>
-  </div>
-  <div id="qualityContainer">
 
-    <div id="sliderContainer">
-      <span id="min"></span>
-      <input type="range" id="qualitySlider" name="qualitySlider" step="1" />
-      <span id="max"></span>
-    </div>
-    
-
-
-    <label for="qualitySlider">Quality</label>
-    <p>Quality value</p>
-    <span id="qualityValue"></span>
-  </div>
-  <footer>
-
-  </footer>
 </body>
 
 </html>

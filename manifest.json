@@ -9,6 +9,9 @@
       "minVersion": "26.9.0"
     }
   ],
+  "featureFlags": {
+   "enableSWCSupport": true
+ },
   "manifestVersion": 5,
   "entrypoints": [
     {
@@ -20,20 +23,20 @@
       "type": "panel",
       "id": "vanilla",
       "minimumSize": {
-        "width": 230,
-        "height": 200
+        "width": 300,
+        "height": 400
       },
       "maximumSize": {
         "width": 2000,
         "height": 2000
       },
       "preferredDockedSize": {
-        "width": 230,
-        "height": 300
+        "width": 300,
+        "height": 400
       },
       "preferredFloatingSize": {
-        "width": 230,
-        "height": 300
+        "width": 300,
+        "height": 400
       },
       "icons": [
         {

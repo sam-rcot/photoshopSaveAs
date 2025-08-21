@@ -1,66 +1,67 @@
+// import '@spectrum-web-components/picker/sp-picker.js';
+
 const { entrypoints } = require("uxp");
 const photoshop = require("photoshop").app;
+const { core } = require("photoshop");
 
-// Simple alert command
-const showAlert = () => {
-  alert("This is an alert message");
-};
-
-// Setup UXP entrypoints
 entrypoints.setup({
   commands: {
-    showAlert,
+    showAlert: (message) => {
+      core.showAlert(message);
+    },
   },
   panels: {
     vanilla: {
       show(node) {
-        // DOM elements
         const imageFormat = document.getElementById("imageFormat");
-        const optionText = document.getElementById("option");
         const qualitySlider = document.getElementById("qualitySlider");
         const qualityValue = document.getElementById("qualityValue");
         const minSpan = document.getElementById("min");
         const maxSpan = document.getElementById("max");
+        const qualityLabel = document.getElementById("qualityLabel");
+        const spFormat = document.getElementById("formatSelector")
+        const spBody = document.getElementById("spBody")
 
+        spBody.innerText = "Goodbye"
+        
+        // console.log(spFormat)
         minSpan.innerText = 0;
 
-        // Function to update slider and labels based on selected format
         function updateFormat() {
           const selectedOption = imageFormat.value;
-          optionText.innerText = selectedOption;
 
           if (qualitySlider) {
             if (selectedOption === "jpg") {
+              qualityLabel.innerText = "JPG quality";
               qualitySlider.min = 0;
               qualitySlider.max = 12;
               maxSpan.innerText = 12;
             } else if (selectedOption === "png") {
+              qualityLabel.innerText = "Compression level";
               qualitySlider.min = 0;
               qualitySlider.max = 9;
               maxSpan.innerText = 9;
             }
 
-            // Reset slider to min when switching formats
             qualitySlider.value = qualitySlider.min;
             qualityValue.innerText = qualitySlider.value;
           }
         }
+        if (spFormat) {
+          spFormat.addEventListener("change", evt => {
+            console.log(`Selected item: ${evt.target.selectedIndex}`);
+          })
 
-        // Attach change listener
+        }
         if (imageFormat) {
           imageFormat.addEventListener("change", updateFormat);
+          updateFormat();
         }
 
-        // Real-time slider updates
         if (qualitySlider) {
           qualitySlider.addEventListener("input", () => {
             qualityValue.innerText = qualitySlider.value;
           });
-        }
-
-        // Initialize default selection (JPG)
-        if (imageFormat) {
-          updateFormat();
         }
       }
     }
