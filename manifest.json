@@ -1,6 +1,6 @@
 {
-  "id": "my.first.plugin",
-  "name": "My first plugin",
+  "id": "save.as",
+  "name": "Save As",
   "version": "1.0.0",
   "main": "index.html",
   "host": [
@@ -14,10 +14,7 @@
   },
   "manifestVersion": 5,
   "permissions": {
-    "filesystem": [
-      "read",
-      "write"
-    ],
+    "filesystem": ["read", "write"],
     "localFileSystem": "fullAccess",
     "allowCodeGenerationFromStrings": true
   },
@@ -59,37 +56,21 @@
           "width": 32,
           "height": 32,
           "path": "icons/icon_D.png",
-          "scale": [
-            1,
-            2
-          ],
-          "theme": [
-            "dark",
-            "darkest"
-          ],
-          "species": [
-            "generic"
-          ]
+          "scale": [1, 2],
+          "theme": ["dark", "darkest"],
+          "species": ["generic"]
         },
         {
           "width": 32,
           "height": 32,
           "path": "icons/icon_N.png",
-          "scale": [
-            1,
-            2
-          ],
-          "theme": [
-            "lightest",
-            "light"
-          ],
-          "species": [
-            "generic"
-          ]
+          "scale": [1, 2],
+          "theme": ["lightest", "light"],
+          "species": ["generic"]
         }
       ],
       "label": {
-        "default": "Starter Panel"
+        "default": "Save As"
       }
     }
   ],
@@ -98,28 +79,15 @@
       "width": 23,
       "height": 23,
       "path": "icons/dark.png",
-      "scale": [
-        1,
-        2
-      ],
-      "theme": [
-        "darkest",
-        "dark",
-        "medium"
-      ]
+      "scale": [1, 2],
+      "theme": ["darkest", "dark", "medium"]
     },
     {
       "width": 23,
       "height": 23,
       "path": "icons/light.png",
-      "scale": [
-        1,
-        2
-      ],
-      "theme": [
-        "lightest",
-        "light"
-      ]
+      "scale": [1, 2],
+      "theme": ["lightest", "light"]
     }
   ]
 }
