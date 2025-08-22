@@ -37,11 +37,13 @@ entrypoints.setup({
           document.getElementById('qualitySliderLabel');
         const saveButton = document.getElementById('saveButton');
 
-        /**
-         * Updates slider configuration based on selected image format
-         * @param {string} selectedFormat - The selected format ('jpg' or 'png')
-         * @param {Object} uiElements - Object containing slider and label elements
-         */
+        // Check document is open
+        if (!app.documents.length) {
+          core.alert('No document is open. Please open an image first.');
+          return;
+        }
+        const doc = app.activeDocument;
+
         /**
          * Updates slider configuration based on selected image format
          * @param {string} selectedFormat - The selected format ('jpg' or 'png')
@@ -100,26 +102,73 @@ entrypoints.setup({
           qualitySlider.addEventListener('input', (event) => {
             const currentValue = event.target.value;
             const currentFormat = getCurrentFormat();
-            console.log(
-              `${FORMAT_CONFIG[currentFormat].sliderLabel}: ${currentValue}`
-            );
+            // Removed console logging
           });
         }
 
         if (saveButton) {
-          saveButton.addEventListener('click', (e) => {
-            // file()
-            // core.showAlert("Save")
-            saveFile();
+          saveButton.addEventListener('click', async (e) => {
+            await saveDocumentWithSettings();
           });
         }
-        async function saveFile() {
-          // Prompt user with Save dialog, suggesting a default filename
-          const file = await fs.getFileForSaving('output777.txt');
-          if (file) {
-            await file.write('Hello, world!');
-          } else {
-            // Handle cancelation or no file selected
+
+        /**
+         * Saves the active document with the selected format and quality settings
+         */
+        async function saveDocumentWithSettings() {
+          try {
+            const currentFormat = getCurrentFormat();
+            const currentQuality = qualitySlider
+              ? parseInt(qualitySlider.value)
+              : FORMAT_CONFIG[currentFormat].defaultValue;
+
+            // Get default filename based on document name
+            const defaultName = doc.name.replace(/\.[^/.]+$/, '') || 'untitled';
+            const extension = currentFormat === 'jpg' ? '.jpg' : '.png';
+            const suggestedFilename = defaultName + extension;
+
+            // Show file save dialog
+            const file = await fs.getFileForSaving(suggestedFilename);
+
+            if (!file) {
+              return; // User cancelled
+            }
+
+            // Execute the save operation in modal scope
+            await core.executeAsModal(
+              async () => {
+                // Create save options based on format
+                let saveOptions;
+                if (currentFormat === 'jpg') {
+                  saveOptions = {
+                    quality: currentQuality,
+                    embedColorProfile: true,
+                    formatOptions:
+                      core.constants.FormatOptions.STANDARDBASELINE,
+                    matte: core.constants.MatteType.NONE,
+                  };
+                } else {
+                  // PNG
+                  saveOptions = {
+                    compression: currentQuality,
+                    interlaced: false,
+                  };
+                }
+
+                // Save the document
+                if (currentFormat === 'jpg') {
+                  await doc.saveAs.jpg(file, saveOptions);
+                } else {
+                  await doc.saveAs.png(file, saveOptions);
+                }
+              },
+              { commandName: 'Save Document with Custom Settings' }
+            );
+
+            core.showAlert(`Document saved successfully as ${file.name}`);
+          } catch (error) {
+            console.error('Error saving document:', error);
+            core.showAlert(`Error saving document: ${error.message}`);
           }
         }
       },
