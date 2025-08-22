@@ -37,6 +37,11 @@ entrypoints.setup({
           document.getElementById('qualitySliderLabel');
         const saveButton = document.getElementById('saveButton');
 
+        // Set JPG as default format
+        if (imageFormatSelector) {
+          imageFormatSelector.selectedIndex = 0; // 0 = JPG, 1 = PNG
+        }
+
         // Check document is open
         if (!app.documents.length) {
           core.alert('No document is open. Please open an image first.');
@@ -127,8 +132,13 @@ entrypoints.setup({
             const extension = currentFormat === 'jpg' ? '.jpg' : '.png';
             const suggestedFilename = defaultName + extension;
 
-            // Show file save dialog
-            const file = await fs.getFileForSaving(suggestedFilename);
+            // Get default folder (user's home directory)
+            const homeFolder = await fs.getDataFolder();
+
+            // Show file save dialog with home folder as starting location
+            const file = await fs.getFileForSaving(suggestedFilename, {
+              startLocation: homeFolder,
+            });
 
             if (!file) {
               return; // User cancelled
@@ -143,9 +153,6 @@ entrypoints.setup({
                   saveOptions = {
                     quality: currentQuality,
                     embedColorProfile: true,
-                    formatOptions:
-                      core.constants.FormatOptions.STANDARDBASELINE,
-                    matte: core.constants.MatteType.NONE,
                   };
                 } else {
                   // PNG
@@ -169,6 +176,16 @@ entrypoints.setup({
           } catch (error) {
             console.error('Error saving document:', error);
             core.showAlert(`Error saving document: ${error.message}`);
+          }
+        }
+
+        async function saveFile() {
+          // Prompt user with Save dialog, suggesting a default filename
+          const file = await fs.getFileForSaving('output777.txt');
+          if (file) {
+            await file.write('Hello, world!');
+          } else {
+            // Handle cancelation or no file selected
           }
         }
       },
