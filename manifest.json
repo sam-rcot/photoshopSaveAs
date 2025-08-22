@@ -10,9 +10,25 @@
     }
   ],
   "featureFlags": {
-   "enableSWCSupport": true
- },
+    "enableSWCSupport": true
+  },
   "manifestVersion": 5,
+  "permissions": {
+    "filesystem": [
+      "read",
+      "write"
+    ],
+    "localFileSystem": "fullAccess",
+    "allowCodeGenerationFromStrings": true
+  },
+  "requiredPermissions": {
+    "allowCodeGenerationFromStrings": true,
+    "localFileSystem": "fullAccess"
+  },
+  "uiEntry": {
+    "type": "panel",
+    "id": "vanilla"
+  },
   "entrypoints": [
     {
       "type": "command",
